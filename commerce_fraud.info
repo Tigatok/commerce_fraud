@@ -5,3 +5,5 @@ core = 7.x
 dependencies[] = commerce
 dependencies[] = commerce_order
 dependencies[] = rules
+
+configure = admin/commerce/config/fraud
