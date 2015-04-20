@@ -37,3 +37,13 @@ function commerce_fraud_permission() {
     ),
   );
 }
+
+/**
+ * Implements hook_help().
+ */
+function commerce_fraud_help($path) {
+  switch ($path) {
+    case 'admin/commerce/config/fraud':
+      return '<p>' . t('This page lets you define the lower and upper caps for each kind of fraud level.') . '</p>';
+  }
+}
