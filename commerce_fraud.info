@@ -1,6 +1,7 @@
 name = Commerce Fraud
 description = Detects potentially fraudulous orders
 core = 7.x
+package = Commerce (contrib)
 
 dependencies[] = commerce
 dependencies[] = commerce_order

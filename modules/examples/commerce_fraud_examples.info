@@ -1,0 +1,10 @@
+name = Commerce Fraud Examples
+description = Examples of using rules commerce_fraud
+core = 7.x
+package = Commerce (contrib)
+
+features[features_api][] = api:1
+features[rules_config][] = rules_automatically_accept_if_whitelisted
+features[rules_config][] = rules_automatically_decline_if_blacklisted
+features[rules_config][] = rules_decrease_fraud_count_for_female
+features[rules_config][] = rules_increase_fraud_count_for_male
