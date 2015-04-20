@@ -5,22 +5,24 @@
  * commerce_fraud main file.
  */
 
-define('COMMERCE_FRAUD_KEY', 'commerce_fraud_count');
-
 /**
  * Implements hook_menu().
  */
 function commerce_fraud_menu() {
-  return array(
-    'admin/commerce/config/fraud' => array(
-      'title' => 'Manage frauds',
-      'description' => 'Manages the commerce_fraud caps',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('commerce_fraud_admin_settings'),
-      'access arguments' => array('administer frauds'),
-      'file' => '/includes/commerce_fraud.admin.inc',
-    ),
+  $items['admin/commerce/config/fraud'] = array(
+    'title' => 'Manage frauds',
+    'description' => 'Manages the commerce_fraud caps',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('commerce_fraud_admin_settings'),
+    'access arguments' => array('administer frauds'),
+    'file' => '/includes/commerce_fraud.admin.inc',
   );
+
+  if (module_exists('commerce_kickstart_menus')) {
+    $items['admin/commerce/config/fraud']['parent'] = 'admin/commerce/config/advanced-settings';
+  }
+
+  return $items;
 }
 
 /**
