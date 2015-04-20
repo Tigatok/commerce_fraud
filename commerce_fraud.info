@@ -1,0 +1,3 @@
+name = Commerce Fraud
+description = Detects potentially fraudulous orders
+core = 7.x
