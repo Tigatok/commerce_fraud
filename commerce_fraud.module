@@ -4,3 +4,6 @@
  * @file
  * commerce_fraud main file.
  */
+
+
+define('COMMERCE_FRAUD_KEY', 'commerce_fraud_count');
