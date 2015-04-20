@@ -40,48 +40,32 @@ function commerce_fraud_examples_default_rules_configuration() {
       ]
     }
   }');
-  $items['rules_decrease_fraud_count_for_female'] = entity_import('rules_config', '{ "rules_decrease_fraud_count_for_female" : {
-      "LABEL" : "Decrease fraud count for female",
+  $items['rules_decrease_fraud_count_for_women'] = entity_import('rules_config', '{ "rules_decrease_fraud_count_for_women" : {
+      "LABEL" : "Decrease fraud count for women",
       "PLUGIN" : "reaction rule",
       "OWNER" : "rules",
       "TAGS" : [ "commerce_fraud" ],
       "REQUIRES" : [ "rules", "commerce_fraud", "entity" ],
       "ON" : { "commerce_customer_profile_presave" : [] },
       "IF" : [
-        { "entity_has_field" : {
-            "entity" : [ "commerce-customer-profile" ],
-            "field" : "field_gender"
-          }
-        },
-        { "data_is" : {
-            "data" : [ "commerce-customer-profile:field-gender" ],
-            "value" : "Female"
-          }
-        }
+        { "entity_has_field" : { "entity" : [ "commerce-customer-profile" ], "field" : "field_gender" } },
+        { "data_is" : { "data" : [ "commerce-customer-profile:field-gender" ], "value" : "73" } }
       ],
       "DO" : [
         { "commerce_fraud_decrease_fraud_count" : { "commerce_order" : [ "site:current-cart-order" ] } }
       ]
     }
   }');
-  $items['rules_increase_fraud_count_for_male'] = entity_import('rules_config', '{ "rules_increase_fraud_count_for_male" : {
-      "LABEL" : "Increase fraud count for male",
+  $items['rules_increase_fraud_count_for_men'] = entity_import('rules_config', '{ "rules_increase_fraud_count_for_men" : {
+      "LABEL" : "Increase fraud count for men",
       "PLUGIN" : "reaction rule",
       "OWNER" : "rules",
       "TAGS" : [ "commerce_fraud" ],
       "REQUIRES" : [ "rules", "commerce_fraud", "entity" ],
       "ON" : { "commerce_customer_profile_presave" : [] },
       "IF" : [
-        { "entity_has_field" : {
-            "entity" : [ "commerce-customer-profile" ],
-            "field" : "field_gender"
-          }
-        },
-        { "data_is" : {
-            "data" : [ "commerce-customer-profile:field-gender" ],
-            "value" : "Male"
-          }
-        }
+        { "entity_has_field" : { "entity" : [ "commerce-customer-profile" ], "field" : "field_gender" } },
+        { "data_is" : { "data" : [ "commerce-customer-profile:field-gender" ], "value" : "72" } }
       ],
       "DO" : [
         { "commerce_fraud_increase_fraud_count" : { "commerce_order" : [ "site:current-cart-order" ] } }
