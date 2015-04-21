@@ -111,5 +111,30 @@ function commerce_fraud_examples_default_rules_configuration() {
       ]
     }
   }');
+  $items['rules_increase_fraud_count_if_badword_in_address'] = entity_import('rules_increase_fraud_count_if_badword_in_address', '{ "rules_increase_fraud_count_if_badword_in_address" : {
+      "LABEL" : "Increase fraud count if badword in address",
+      "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
+      "TAGS" : [ "commerce_fraud" ],
+      "REQUIRES" : [ "rules", "commerce_fraud", "entity" ],
+      "ON" : { "commerce_customer_profile_presave" : [] },
+      "IF" : [
+        { "entity_has_field" : {
+            "entity" : [ "commerce-customer-profile" ],
+            "field" : "commerce_customer_address"
+          }
+        },
+        { "text_matches" : {
+            "text" : [ "commerce-customer-profile:commerce-customer-address:thoroughfare" ],
+            "match" : "hopital|hotel|clinique",
+            "operation" : "regex"
+          }
+        }
+      ],
+      "DO" : [
+        { "commerce_fraud_increase_fraud_count" : { "commerce_order" : [ "site:current-cart-order" ], "counter" : "10" } }
+      ]
+    }
+  }');
   return $items;
 }
