@@ -4,6 +4,7 @@ core = 7.x
 package = Commerce (contrib)
 
 dependencies[] = commerce_fraud
+dependencies[] = ip2country
 
 features[features_api][] = api:1
 features[rules_config][] = rules_automatically_accept_if_whitelisted

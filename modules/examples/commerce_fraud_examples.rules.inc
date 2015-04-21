@@ -38,6 +38,16 @@ function commerce_fraud_examples_rules_condition_info() {
         ),
       ),
     ),
+    'commerce_fraud_examples_country_matches_ip' => array(
+      'label' => t('The given country matches the IP address'),
+      'group' => t('Commerce Fraud Examples'),
+      'parameter' => array(
+        'country' => array(
+          'label' => t('The country'),
+          'type' => 'addressfield',
+        ),
+      ),
+    ),
   );
 }
 
@@ -73,4 +83,17 @@ function commerce_fraud_examples_timestamp_from_days($days) {
   $date = new DateTimeImmutable();
   $date = $date->modify('- ' . $days . ' days');
   return $date->getTimestamp();
+}
+
+/**
+ * Callback for the country matches ip condition.
+ */
+function commerce_fraud_examples_country_matches_ip($address) {
+  $ip_address = ip_address();
+  $guessed_country = ip2country_get_country($ip_address);
+  if ($guessed_country === FALSE) {
+    return TRUE;
+  }
+
+  return $address['country'] === $guessed_country;
 }
