@@ -46,6 +46,17 @@ function commerce_fraud_rules_action_info() {
       ),
       'access callback' => 'commerce_order_rules_access',
     ),
+    'commerce_fraud_reset_fraud_count' => array(
+      'label' => t('Reset the fraud count'),
+      'group' => t('Commerce Fraud'),
+      'parameter' => array(
+        'commerce_order' => array(
+          'type' => 'commerce_order',
+          'label' => t('The commerce order'),
+        ),
+      ),
+      'access callback' => 'commerce_order_rules_access',
+    ),
   );
 }
 
@@ -78,5 +89,16 @@ function commerce_fraud_decrease_fraud_count(stdClass $order, $counter) {
     $order->data[COMMERCE_FRAUD_KEY] = 0;
   }
   $order->data[COMMERCE_FRAUD_KEY] = $order->data[COMMERCE_FRAUD_KEY] - $counter;
+  rules_invoke_event('commerce_fraud_count_changed', $order);
+}
+
+/**
+ * Implements the callback of "Reset the fraud count" rule.
+ *
+ * @param stdClass $order
+ *   The current commerce_order.
+ */
+function commerce_fraud_reset_fraud_count(stdClass $order) {
+  $order->data[COMMERCE_FRAUD_KEY] = 0;
   rules_invoke_event('commerce_fraud_count_changed', $order);
 }
