@@ -72,5 +72,44 @@ function commerce_fraud_examples_default_rules_configuration() {
       ]
     }
   }');
+  $items['rules_decrease_fraud_count_if_order_less_than_250'] = entity_import('rules_decrease_fraud_count_if_order_less_than_250', '{ "rules_decrease_fraud_count_if_order_less_than_250" : {
+      "LABEL" : "Decrease fraud count if order less than 250",
+      "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
+      "TAGS" : [ "commerce_fraud" ],
+      "REQUIRES" : [ "rules", "commerce_fraud", "entity" ],
+      "ON" : { "commerce_order_presave" : [] },
+      "IF" : [
+        { "data_is" : {
+            "data" : [ "commerce-order:commerce-order-total:amount" ],
+            "op" : "\u003C",
+            "value" : "250"
+          }
+        }
+      ],
+      "DO" : [
+        { "commerce_fraud_decrease_fraud_count" : { "commerce_order" : [ "commerce_order" ], "counter" : "10" } }
+      ]
+    }
+  }');
+  $items['rules_decrease_fraud_count_if_last_order_2_months_or_1st_order'] = entity_import('rules_decrease_fraud_count_if_last_order_2_months_or_1st_order', '{ "rules_decrease_fraud_count_if_last_order_2_months_or_1st_order" : {
+      "LABEL" : "Decrease fraud count if last order \u003E 2 months or 1st order",
+      "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
+      "TAGS" : [ "commerce_fraud" ],
+      "REQUIRES" : [ "commerce_fraud_examples", "commerce_fraud", "entity" ],
+      "ON" : { "commerce_order_presave" : [] },
+      "IF" : [
+        { "OR" : [
+            { "commerce_fraud_examples_has_less_than_x_orders" : { "user" : [ "commerce-order:owner" ], "number" : "1" } },
+            { "commerce_fraud_examples_last_order" : { "user" : [ "commerce-order:owner" ], "date" : "60" } }
+          ]
+        }
+      ],
+      "DO" : [
+        { "commerce_fraud_decrease_fraud_count" : { "commerce_order" : [ "commerce_order" ], "counter" : "10" } }
+      ]
+    }
+  }');
   return $items;
 }
