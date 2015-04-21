@@ -136,5 +136,44 @@ function commerce_fraud_examples_default_rules_configuration() {
       ]
     }
   }');
+  $items['rules_decrease_fraud_count_if_billing_country_is_shipping_countr'] = entity_import('rules_decrease_fraud_count_if_billing_country_is_shipping_countr', '{ "rules_decrease_fraud_count_if_billing_country_is_shipping_countr" : {
+      "LABEL" : "Decrease fraud count if billing country is shipping country",
+      "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
+      "TAGS" : [ "commerce_fraud" ],
+      "REQUIRES" : [ "rules", "commerce_fraud", "entity" ],
+      "ON" : { "commerce_order_presave" : [] },
+      "IF" : [
+        { "entity_has_field" : { "entity" : [ "commerce-order" ], "field" : "commerce_customer_billing" } },
+        { "entity_has_field" : {
+            "entity" : [ "commerce-order" ],
+            "field" : "commerce_customer_shipping"
+          }
+        },
+        { "entity_has_field" : {
+            "entity" : [ "commerce-order:commerce-customer-billing" ],
+            "field" : "commerce_customer_address"
+          }
+        },
+        { "entity_has_field" : {
+            "entity" : [ "commerce-order:commerce-customer-shipping" ],
+            "field" : "commerce_customer_address"
+          }
+        },
+        { "data_is" : {
+            "data" : [
+              "commerce-order:commerce-customer-billing:commerce-customer-address:country"
+            ],
+            "value" : [
+              "commerce-order:commerce-customer-shipping:commerce-customer-address:country"
+            ]
+          }
+        }
+      ],
+      "DO" : [
+        { "commerce_fraud_decrease_fraud_count" : { "commerce_order" : [ "commerce_order" ], "counter" : "10" } }
+      ]
+    }
+  }');
   return $items;
 }
