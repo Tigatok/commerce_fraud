@@ -8,3 +8,5 @@ dependencies[] = commerce_order
 dependencies[] = rules
 
 configure = admin/commerce/config/fraud
+
+files[] = includes/views_handler_commerce_fraud_level.inc
