@@ -57,6 +57,26 @@ function commerce_fraud_admin_settings() {
     '#default_value' => variable_get('commerce_fraud_blacklist_lower_cap', 20),
     '#element_validate' => array('element_validate_integer'),
   );
+  
+  /*=========Store Settings========*/
+  $form['commerce_fraud_store_settings']= array (
+    '#type' =>'fieldset',
+    '#title'=>t('Store Settings'),
+  );
+  $form ['commerce_fraud_store_settings']['commerce_fraud_store_threshold'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Order Total Threshold'),
+    '#description'=>t('This number should be a larger than average total order dollar amount.'),
+    '#default_value' => variable_get('commerce_fraud_store_threshold', 1000),
+    '#element_validate' => array('element_validate_integer'),
+  );
+  $form['commerce_fraud_store_settings']['commerce_fraud_store_po_box_weight'] = array(
+    '#type'=>'textfield',
+    '#title'=> t('PO Box Weight'),
+    '#description'=>t('The higher this value, the higher the fraud score for those with a PO Box'),
+    '#default_value'=>variable_get('commerce_fraud_store_po_box_weight', 0),
+    '#element_validate' => array('element_validate_integer'),
+  );
 
   return system_settings_form($form);
 }
