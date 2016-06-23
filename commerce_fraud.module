@@ -100,3 +100,99 @@ function commerce_fraud_commerce_order_status_info() {
 
   return $order_statuses;
 }
+
+function commerce_fraud_form($form, $form_state){
+  $views_name = 'commerce_backoffice_orders';
+  $display_id = 'page';
+  
+  $orders = views_get_view_result($views_name, $display_id);
+  $reasons = array(
+    'price' => 'Price',
+    'pobox' => 'PO Box',
+    'multi_item' => 'Quantity',
+    'past_fraud_match_factor' => 'Past Fraud Match Factor',
+    'past_fraud_credit_card_number_factor' => 'Past Fraud Credit Card Number Factor',
+  );
+  $options = array();
+  
+  $header = array(
+    'reason' => 'Reason',
+    'fraud_score' => 'Fraud Score',
+  );
+  
+  foreach($orders as $order){
+    $total_score = 1;
+    if($total_score > 0){
+      foreach($reasons as $key=>$value){
+        $reason_score = 1;
+        $options[$order->order_id][$key] = array(
+          'reason' => $value,
+          'fraud_score' => $reason_score,
+        );
+      }
+    }
+    $options[$order->order_id]['total_score'] = array (
+      'reason' => 'Total',
+      'fraud_score' => $total_score,
+    );
+    
+    $item_name = $order->order_id;
+
+    $dv[$item_name] = FALSE;
+    $form[$item_name] = array(
+      '#type' => 'item', // Wrap the table in type item
+      '#title' => 'Order ' . $item_name,
+      '#tree' => TRUE,
+      'submissions' => array(
+        '#type' => 'tableselect',
+        '#header' => $header,
+        '#multiple' => TRUE,
+        '#disabled' => TRUE,
+        '#options' => $options[$order->order_id],
+
+      ),
+    );
+  }
+  
+  return $form;
+}
+
+/**
+ * Implements hook_entity_view
+ * @param $entity
+ * @param $entity_type
+ * @param $view_mode
+ * @param $langcode
+ */
+function commerce_fraud_entity_view($entity, $entity_type, $view_mode, $langcode){
+  if ($entity_type == 'commerce_order' && in_array($view_mode, array('administrator', 'backoffice'))) {
+
+    if (isset($entity->order_number)) {
+
+//      calc_risk_score($entity->order_number, TRUE);
+
+      // Grab the 'Fraud Detection' form which contains all the orders and their scores
+      @$orders_form = commerce_fraud_form(NULL, $NULL)[$entity->order_number]['submissions'];
+
+      $markup = '<div class="field commerce-backoffice-order-reason">';
+
+      if (isset($orders_form['#options'])) {
+        $markup .= '<div class="commerce-backoffice-order-reason-label">' . t('Risk Score Breakdown') . '</div>';
+        //$markup .= views_embed_view('commerce_order_risk', 'block_1', $entity->order_number);
+        $markup .= '<table><tr><th>Reason</th><th>Score</th></tr>';
+        foreach ($orders_form['#options'] as $options) {
+          $markup .= '<tr><td>' . $options['reason'] . '</td><td>' . $options['fraud_score'] . '</td></tr>';
+        }
+        $markup .= '</table>';
+        $markup .= '</div>';
+      } else {
+        $markup .= '<div class="commerce-backoffice-order-reason-label">' . t('No Risk Score Associated With This Order') . '</div>';
+      }
+      $entity->content['reason_status'] = [
+        '#weight' => 10,
+        '#markup' => $markup,
+        '#access' => commerce_order_access('view', $entity),
+      ];
+    }
+  }
+}
