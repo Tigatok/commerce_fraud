@@ -20,7 +20,8 @@ function commerce_fraud_admin_settings() {
   $form['commerce_fraud_store_settings']['commerce_fraud_store_threshold'] = array(
       '#type' => 'textfield',
       '#title' => t('Order Total Threshold'),
-      '#description' => t('This number should be a larger than the average order total amount.'),
+      '#description' => t('This number represents an unusual order total amount.
+      The closer the order total is to this value, the higher the penalty will be.'),
       '#default_value' => variable_get('commerce_fraud_store_threshold', 1000),
       '#element_validate' => array('element_validate_integer'),
   );
@@ -28,7 +29,7 @@ function commerce_fraud_admin_settings() {
   $form['commerce_fraud_store_settings']['commerce_fraud_store_po_box_penalty'] = array(
       '#type' => 'textfield',
       '#title' => t('P.O. Box Penalty'),
-      '#description' => t('This value will be added to the fraud score for orders with a P.O. Box'),
+      '#description' => t('This value will be added to the fraud score for orders with a P.O. Box.'),
       '#default_value' => variable_get('commerce_fraud_store_po_box_penalty', 0),
       '#element_validate' => array('element_validate_integer'),
   );
