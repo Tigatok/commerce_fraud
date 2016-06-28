@@ -14,7 +14,7 @@ function commerce_fraud_admin_settings() {
   /*=========Store Settings========*/
   $form['commerce_fraud_store_settings'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Store Settings'),
+      '#title' => t('Thresholds and Penalties'),
   );
 
   $form['commerce_fraud_store_settings']['commerce_fraud_store_threshold'] = array(
