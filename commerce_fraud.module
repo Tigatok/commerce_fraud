@@ -12,8 +12,8 @@ define('COMMERCE_FRAUD_KEY', 'commerce_fraud_count');
  */
 function commerce_fraud_menu() {
   $items['admin/commerce/config/fraud'] = array(
-    'title' => 'Manage frauds',
-    'description' => 'Manages the commerce_fraud caps',
+    'title' => 'Fraud Score Settings',
+    'description' => 'Manage the penalties, thresholds, and caps for the Fraud Score.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('commerce_fraud_admin_settings'),
     'access arguments' => array('administer frauds'),
