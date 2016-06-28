@@ -56,6 +56,7 @@ function commerce_fraud_help($path) {
 function commerce_fraud_views_api() {
   return array(
     'api' => 3,
+    'path' => drupal_get_path('module', 'commerce_fraud') . '/includes/views',
   );
 }
 
@@ -87,13 +88,13 @@ function commerce_fraud_commerce_order_status_info() {
   $order_statuses = array();
 
   $order_statuses['fraudulent'] = array(
-    'name'=>'fraudulent',
+    'name' => 'fraudulent',
     'title' => t('Fraudulent (Canceled)'),
     'state' => 'canceled',
   );
 
   $order_statuses['high_risk'] = array(
-    'name'=>'high_risk',
+    'name' => 'high_risk',
     'title' => t('High Risk (Pending)'),
     'state' => 'pending',
   );
