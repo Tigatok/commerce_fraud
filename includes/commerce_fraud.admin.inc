@@ -92,11 +92,11 @@ function commerce_fraud_admin_settings() {
     '#element_validate' => array('element_validate_integer'),
   );
 
-  $form['commerce_fraud_store_settings']['commerce_fraud_store_po_box_offset'] = array(
+  $form['commerce_fraud_store_settings']['commerce_fraud_store_po_box_penalty'] = array(
     '#type' => 'textfield',
-    '#title' => t('P.O. Box Offset'),
+    '#title' => t('P.O. Box Penalty'),
     '#description' => t('This value will be added to the fraud score for orders with a P.O. Box'),
-    '#default_value' => variable_get('commerce_fraud_store_po_box_offset', 0),
+    '#default_value' => variable_get('commerce_fraud_store_po_box_penalty', 0),
     '#element_validate' => array('element_validate_integer'),
   );
 
