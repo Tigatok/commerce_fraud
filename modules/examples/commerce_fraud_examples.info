@@ -11,3 +11,9 @@ features[rules_config][] = rules_automatically_accept_if_whitelisted
 features[rules_config][] = rules_automatically_decline_if_blacklisted
 features[rules_config][] = rules_decrease_fraud_count_for_female
 features[rules_config][] = rules_increase_fraud_count_for_male
+
+; Information added by Drupal.org packaging script on 2015-05-06
+version = "7.x-1.0-alpha2"
+core = "7.x"
+project = "commerce_fraud"
+datestamp = "1430904182"
