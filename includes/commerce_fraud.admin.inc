@@ -11,6 +11,28 @@
 function commerce_fraud_admin_settings() {
   $form = array();
 
+  /*=========Store Settings========*/
+  $form['commerce_fraud_store_settings'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Store Settings'),
+  );
+
+  $form['commerce_fraud_store_settings']['commerce_fraud_store_threshold'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Order Total Threshold'),
+      '#description' => t('This number should be a larger than the average order total amount.'),
+      '#default_value' => variable_get('commerce_fraud_store_threshold', 1000),
+      '#element_validate' => array('element_validate_integer'),
+  );
+
+  $form['commerce_fraud_store_settings']['commerce_fraud_store_po_box_penalty'] = array(
+      '#type' => 'textfield',
+      '#title' => t('P.O. Box Penalty'),
+      '#description' => t('This value will be added to the fraud score for orders with a P.O. Box'),
+      '#default_value' => variable_get('commerce_fraud_store_po_box_penalty', 0),
+      '#element_validate' => array('element_validate_integer'),
+  );
+
   $form['commerce_fraud_whitelist'] = array(
     '#type' => 'fieldset',
     '#title' => t('Whitelist caps'),
@@ -77,28 +99,6 @@ function commerce_fraud_admin_settings() {
     '#default_value'=>variable_get('commerce_fraud_store_po_box_weight', 0),
     '#element_validate' => array('element_validate_integer'),
   );
-
-  /*=========Store Settings========*/
-  $form['commerce_fraud_store_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Store Settings'),
-  );
-
-  $form['commerce_fraud_store_settings']['commerce_fraud_store_threshold'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Order Total Threshold'),
-    '#description' => t('This number should be a larger than the average order total amount.'),
-    '#default_value' => variable_get('commerce_fraud_store_threshold', 1000),
-    '#element_validate' => array('element_validate_integer'),
-  );
-
-  $form['commerce_fraud_store_settings']['commerce_fraud_store_po_box_penalty'] = array(
-    '#type' => 'textfield',
-    '#title' => t('P.O. Box Penalty'),
-    '#description' => t('This value will be added to the fraud score for orders with a P.O. Box'),
-    '#default_value' => variable_get('commerce_fraud_store_po_box_penalty', 0),
-    '#element_validate' => array('element_validate_integer'),
-  );
-
+  
   return system_settings_form($form);
 }
