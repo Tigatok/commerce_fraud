@@ -6,11 +6,10 @@
  */
 
 /**
- * Implements hook_default_views_alter()
- * @param $views
+ * Implements hook_default_views()
  * @return mixed
  */
-function commerce_fraud_views_default_views_alter(&$views){
+function commerce_fraud_views_default_views(){
   $view = new view();
   $view->name = 'commerce_backoffice_orders';
   $view->description = '';
