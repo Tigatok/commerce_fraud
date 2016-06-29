@@ -320,4 +320,4 @@ function commerce_fraud_views_default_views_alter(&$views){
   
   $views[$view->name] = $view;
   return $views;
-} 
+}
