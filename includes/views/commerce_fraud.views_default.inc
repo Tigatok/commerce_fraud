@@ -2,7 +2,7 @@
 
 /**
  * @file
- * The default fraud settings
+ * The default fraud settings.
  */
 
 /**
