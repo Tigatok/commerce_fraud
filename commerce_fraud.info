@@ -10,3 +10,10 @@ dependencies[] = rules
 configure = admin/commerce/config/fraud
 
 files[] = includes/views_handler_commerce_fraud_level.inc
+
+; Information added by Drupal.org packaging script on 2015-05-06
+version = "7.x-1.0-alpha2"
+core = "7.x"
+project = "commerce_fraud"
+datestamp = "1430904182"
+
